@@ -1,21 +1,20 @@
-
 import numpy as np
 import pandas as pd
 from scipy.misc import imread
 from sklearn.metrics import accuracy_score
 
-dataset = pd.read_csv('dataset.csv')
+dataset = pd.read_csv('train.csv')
 a=np.array(dataset)
 
-X = dataset.iloc[:,[0,1,2,3,4]].values
-Y = dataset['Diagnosis'].values
-xPredict = np.array(([55,1,0,0,1]), dtype=float)
+X = dataset.iloc[:,[0,1,2,3,4,6,7]].values
+Y = dataset.iloc[:,8].values
+xPredict = np.array(([1, 55, 1, 0, 0, 1, 63, 19]), dtype=float)
 
 
 class Neural_Network(object):
   def __init__(self):
     #parameters
-    self.inputSize = 5
+    self.inputSize = 8
     self.outputSize = 1
     self.hiddenSize = 3
 
@@ -63,7 +62,3 @@ class Neural_Network(object):
 NN = Neural_Network()
 NN.saveWeights()
 prediction = NN.predict()
-
-
-
-
