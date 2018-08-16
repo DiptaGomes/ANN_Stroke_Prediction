@@ -4,9 +4,10 @@ from scipy.misc import imread
 from sklearn.metrics import accuracy_score
 
 dataset = pd.read_csv('train.csv')
+test_dataset = pd.read_csv('test.csv')
 a=np.array(dataset)
 
-X = dataset.iloc[:,[0,1,2,3,4,6,7]].values
+X = dataset.iloc[:,[0,1,2,3,4,6,5,7]].values
 Y = dataset.iloc[:,8].values
 xPredict = np.array(([1, 55, 1, 0, 0, 1, 63, 19]), dtype=float)
 
@@ -58,7 +59,24 @@ class Neural_Network(object):
     print("Predicted data based on trained weights: ")
     print("Input (scaled): \n" + str(xPredict))
     print("Output: \n" + str(self.forward(xPredict)))
+  def predict_new(self, xPredict):
+    print("Predicted data based on trained weights: ")
+    print("Input (scaled): \n" + str(xPredict))
+    print("Output: \n" + str(self.forward(xPredict)))
 
 NN = Neural_Network()
 NN.saveWeights()
 prediction = NN.predict()
+
+for index, row in test_dataset.iterrows():
+  if(index<10):
+  
+      data = pd.DataFrame( {'gender':test_dataset['gender'], 'age':test_dataset['age'],  'hypertension':test_dataset['hypertension'],  'heart_disease':test_dataset['heart_disease'],     
+     'ever_married':test_dataset['ever_married'],  'Residence_type':test_dataset['Residence_type'],   'avg_glucose_level':test_dataset['avg_glucose_level'], 'bmi':test_dataset['bmi']} )
+      
+      test_dataset['predicted_stroke'] = str(NN.predict_new(data))
+      test_dataset.to_csv('test_dataset.csv', index=False)
+  else:
+    exit()
+
+
